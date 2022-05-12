@@ -4,8 +4,37 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+const modal = document.getElementById('modal')
+modal.classList.add('hidden')
+
+function heartPressServerCall(){
+  const hearts = document.getElementsByClassName('like-glyph')
+  hearts.addEventListener('click',serverCall())
+}
+
+function heartSuccess(){
+  if(heart.target.innerText === EMPTY_HEART){
+    heart.target.classList.add('activated-heart')
+  }else{
+    heart.target.classList.remove('activated-heart')
+}  }
+
+function heartFail(message){
+  const modalMessage = document.getElementById("modal-message")
+  modal.classList.remove('hidden')
+  modalMessage.innerText = message
+  setTimeout(() => {
+    modal.classList.add('hidden')
+    modalMessage.innerText = ''
+  }, 3000)
+}
 
 
+function serverCall(){
+  mimicServerCall()
+  .then(() => heartSuccess())
+  .catch((error) => heartFail(error))
+}
 
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
